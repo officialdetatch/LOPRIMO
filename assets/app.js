@@ -411,4 +411,34 @@
       }).then(function () { cfSubmit.disabled = false; });
     });
   }
+
+  /* ---------- newsletter popup (home only, once per visitor) ---------- */
+  var nlOverlay = document.getElementById('nlModalOverlay');
+  if (nlOverlay) {
+    var NL_KEY = 'lp_newsletter_dismissed_at';
+    var NL_SNOOZE_DAYS = 30;
+    var nlClose = document.getElementById('nlModalClose');
+
+    function nlShouldShow() {
+      try {
+        var last = localStorage.getItem(NL_KEY);
+        if (!last) return true;
+        return (Date.now() - parseInt(last, 10)) / 86400000 > NL_SNOOZE_DAYS;
+      } catch (e) { return true; }
+    }
+    function nlOpen() {
+      nlOverlay.hidden = false;
+      document.body.style.overflow = 'hidden';
+    }
+    function nlDismiss() {
+      nlOverlay.hidden = true;
+      document.body.style.overflow = '';
+      try { localStorage.setItem(NL_KEY, String(Date.now())); } catch (e) {}
+    }
+    if (nlClose) nlClose.addEventListener('click', nlDismiss);
+    nlOverlay.addEventListener('click', function (e) { if (e.target === nlOverlay) nlDismiss(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !nlOverlay.hidden) nlDismiss(); });
+
+    if (nlShouldShow()) setTimeout(nlOpen, 5000);
+  }
 })();

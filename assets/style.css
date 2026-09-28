@@ -370,6 +370,72 @@ h1,h2,h3,h4{
 .card h3{ font-size:1.2rem; }
 .card p{ color:var(--espresso-soft); margin:0; font-size:.94rem; }
 
+/* ---------- newsletter (home) ---------- */
+.newsletter-box{
+  display:flex; align-items:center; justify-content:space-between; gap:28px;
+  flex-wrap:wrap;
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:32px 34px;
+  box-shadow:var(--shadow-lo);
+}
+.newsletter-copy{ flex:1; min-width:220px; }
+.newsletter-copy .eyebrow{
+  display:block;
+  font-family:var(--font-display); font-weight:600;
+  color:var(--olive); font-size:.78rem; letter-spacing:.08em; text-transform:uppercase;
+  margin-bottom:6px;
+}
+.newsletter-copy h2{ font-size:1.5rem; border:none; padding:0; margin:0 0 6px; }
+.newsletter-copy p{ color:var(--espresso-soft); font-size:.94rem; margin:0; }
+.newsletter-embed{ flex:none; max-width:100%; line-height:0; }
+.newsletter-embed iframe{ max-width:100%; display:block; }
+@media (max-width:640px){
+  .newsletter-box{ flex-direction:column; text-align:center; padding:26px 22px; }
+}
+
+/* ---------- newsletter popup (home, once per visitor) ---------- */
+.nl-modal-overlay{
+  position:fixed; inset:0; z-index:100;
+  background:rgba(44,34,30,.55);
+  display:flex; align-items:center; justify-content:center;
+  padding:20px;
+  animation:nl-fade-in .2s ease;
+}
+.nl-modal-overlay[hidden]{ display:none; }
+@keyframes nl-fade-in{ from{ opacity:0; } to{ opacity:1; } }
+.nl-modal{
+  position:relative;
+  background:var(--paper);
+  border-radius:var(--radius);
+  padding:34px 30px 28px;
+  max-width:420px; width:100%;
+  text-align:center;
+  box-shadow:var(--shadow-md);
+}
+.nl-modal .eyebrow{
+  display:block;
+  font-family:var(--font-display); font-weight:600;
+  color:var(--olive); font-size:.78rem; letter-spacing:.08em; text-transform:uppercase;
+  margin-bottom:8px;
+}
+.nl-modal h2{ font-size:1.4rem; margin:0 0 8px; }
+.nl-modal p{ color:var(--espresso-soft); font-size:.92rem; margin:0 0 18px; }
+.nl-modal .newsletter-embed{ display:flex; justify-content:center; }
+.nl-modal-close{
+  position:absolute; top:8px; right:8px;
+  width:32px; height:32px;
+  border:none; background:transparent;
+  font-size:1.5rem; line-height:1;
+  color:var(--espresso-soft); cursor:pointer;
+  border-radius:50%;
+}
+.nl-modal-close:hover{ background:var(--sand-dim); color:var(--espresso); }
+@media (max-width:480px){
+  .nl-modal{ padding:28px 20px 22px; }
+}
+
 .btn{
   display:inline-flex; align-items:center; gap:8px;
   font-family:var(--font-display);
