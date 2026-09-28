@@ -5,11 +5,22 @@
    ============================================================ */
 window.SINGLES = [
   {
+    "id": "del-desamor-al-amor",
+    "title": "Del Desamor al Amor",
+    "release_date": "2022 | Album",
+    "youtube_url": "https://www.youtube.com/watch?v=0tPGYSGXHBg&list=PLugV2yur25QqPlH9gtijcPcUZxrYmU468",
+    "youtube_id": "0tPGYSGXHBg",
+    "spotify_url": "https://open.spotify.com/album/7lNM70mxvZIehkCRTITaAV",
+    "apple_music_url": "",
+    "cover_image": "",
+    "blurb": ""
+  },
+  {
     "id": "mi-musica",
     "title": "Mi Musica",
     "release_date": "2022 | Single",
-    "youtube_url": "https://youtu.be/96NRA4q9Wj4?si=803DorkJ2OZeqAbO",
     "youtube_id": "96NRA4q9Wj4",
+    "youtube_url": "https://youtu.be/96NRA4q9Wj4?si=803DorkJ2OZeqAbO",
     "spotify_url": "https://open.spotify.com/album/3t75GmxNULdnZt5Dy16ree",
     "apple_music_url": "",
     "cover_image": "",
@@ -19,9 +30,20 @@ window.SINGLES = [
     "id": "chiquitita",
     "title": "Chiquitita",
     "release_date": "2022 | Single",
-    "youtube_url": "https://youtu.be/k3LqR4Jr6sk?si=qAK-BANRfIDVYdlY",
     "youtube_id": "k3LqR4Jr6sk",
+    "youtube_url": "https://youtu.be/k3LqR4Jr6sk?si=qAK-BANRfIDVYdlY",
     "spotify_url": "https://open.spotify.com/album/35PZe4M6m7abjqwW8bPIEX",
+    "apple_music_url": "",
+    "cover_image": "",
+    "blurb": ""
+  },
+  {
+    "id": "inevitable",
+    "title": "Inevitable",
+    "release_date": "2017 | Single",
+    "youtube_id": "n-H4RtDzUbc",
+    "youtube_url": "https://youtu.be/n-H4RtDzUbc?si=9pzF3MjYTaY22-Nj",
+    "spotify_url": "https://open.spotify.com/track/5UUvbdhJgG7u0bAiKWmQ9a?si=a48a05f33e3a49f4",
     "apple_music_url": "",
     "cover_image": "",
     "blurb": ""
@@ -38,22 +60,11 @@ window.SINGLES = [
     "blurb": ""
   },
   {
-    "id": "inevitable",
-    "title": "Inevitable",
-    "release_date": "2017 | Single",
-    "youtube_url": "https://youtu.be/n-H4RtDzUbc?si=9pzF3MjYTaY22-Nj",
-    "youtube_id": "n-H4RtDzUbc",
-    "spotify_url": "https://open.spotify.com/track/5UUvbdhJgG7u0bAiKWmQ9a?si=a48a05f33e3a49f4",
-    "apple_music_url": "",
-    "cover_image": "",
-    "blurb": ""
-  },
-  {
     "id": "corazon-roto",
     "title": "Corazon Roto",
     "release_date": "2017 | Single",
-    "youtube_url": "https://youtu.be/Y5fqz-rzuRo?si=cgwrKm19r3B7Ba7a",
     "youtube_id": "Y5fqz-rzuRo",
+    "youtube_url": "https://youtu.be/Y5fqz-rzuRo?si=cgwrKm19r3B7Ba7a",
     "spotify_url": "https://open.spotify.com/album/3u39PXpfeFWC96pY73KaVw",
     "apple_music_url": "",
     "cover_image": "",

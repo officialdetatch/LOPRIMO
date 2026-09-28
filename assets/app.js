@@ -6,7 +6,7 @@
 
   /* Replace this with the band's real inbox once you have one -
      it's only used for the "couldn't send" fallback messages. */
-  var CONTACT_EMAIL = window.SITE_CONTACT_EMAIL || 'hello@loprimomusic.com';
+  var CONTACT_EMAIL = window.SITE_CONTACT_EMAIL || 'info@loprimofficial.vip';
 
   var MONTHS_ES = ['ENE', 'FEB', 'MAR', 'ABR', 'MAY', 'JUN', 'JUL', 'AGO', 'SEP', 'OCT', 'NOV', 'DIC'];
   var MONTHS_ES_FULL = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
