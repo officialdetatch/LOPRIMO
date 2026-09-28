@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>About writer | LO'PRIMO</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-row">
+      <a class="brand" href="index.html">
+        <span class="crest">
+          <img src="images/logo.png" alt="LO'PRIMO logo" onerror="this.remove()">
+          <span class="crest-fallback">LP</span>
+        </span>
+        <span class="brand-text">
+          <span class="brand-name">LO&#8217;PRIMO</span>
+          <div class="brand-sub">Private tool</div>
+        </span>
+      </a>
+    </div>
+  </header>
+
+  <main>
+  <section class="hero" style="padding:38px 0 28px">
+    <div class="wrap">
+      <div class="hero-kicker">Private tool &middot; not linked from the site</div>
+      <h1 style="font-size:clamp(1.6rem,3.5vw,2.3rem)">About <span class="accent">writer</span></h1>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:34px">
+    <div class="wrap">
+      <div class="writer-note">
+        Edit the bio and social links here, then press <b>Download about-data.js</b> and drop the
+        file into <code>assets/</code>, replacing the old one. Nothing changes on the public site
+        until you do. Visitors never see this page unless you send them the link &mdash; delete
+        <code>about-writer.html</code> and <code>assets/about-writer.js</code> before uploading if
+        you would rather it never leaves your computer.
+      </div>
+      <div class="writer-note hidden" id="amDraftNote">You have unsaved changes from a previous session, loaded below.</div>
+
+      <p class="section-note">&larr; <a href="shows-writer.html">Shows writer</a> &middot; <a href="music-writer.html">Music writer</a> &middot; <a href="posts-writer.html">Posts writer</a></p>
+
+      <div class="editor-panel">
+        <h3>Title &amp; intro</h3>
+        <div class="field">
+          <label for="amTitle">Page title</label>
+          <input id="amTitle" type="text" placeholder="Sobre LO'PRIMO">
+        </div>
+        <div class="field">
+          <label for="amLede">Intro line (shown right under the title)</label>
+          <input id="amLede" type="text" placeholder="One or two lines that set the tone.">
+        </div>
+      </div>
+
+      <div class="editor-panel">
+        <h3>Social links</h3>
+        <div class="writer-grid">
+          <div class="field">
+            <label for="amInstagram">Instagram URL</label>
+            <input id="amInstagram" type="text" placeholder="https://instagram.com/loprimofficial">
+          </div>
+          <div class="field">
+            <label for="amYoutube">YouTube URL</label>
+            <input id="amYoutube" type="text" placeholder="https://www.youtube.com/@LOPRIMO">
+          </div>
+          <div class="field">
+            <label for="amFacebook">Facebook URL</label>
+            <input id="amFacebook" type="text" placeholder="https://facebook.com/loprimo">
+          </div>
+          <div class="field">
+            <label for="amSpotify">Spotify URL</label>
+            <input id="amSpotify" type="text" placeholder="https://open.spotify.com/artist/...">
+          </div>
+        </div>
+      </div>
+
+      <div class="section-head" style="margin-top:34px"><h2>Miembros</h2>
+        <span class="section-note">Uno por integrante &mdash; nombre, rol, bio corta y foto.</span>
+      </div>
+      <div id="amMembers"></div>
+      <div class="news-edit-row" style="margin-top:12px">
+        <button class="btn btn-small" id="amAddMember">+ Miembro</button>
+      </div>
+
+      <div class="section-head"><h2>Bio blocks</h2>
+        <span class="section-note">Paragraphs and images, in the order they appear.</span>
+      </div>
+      <div id="amBlocks"></div>
+      <div class="news-edit-row" style="margin-top:12px">
+        <button class="btn btn-small" id="amAddP">+ Paragraph</button>
+        <button class="btn btn-small" id="amAddImg">+ Image</button>
+      </div>
+
+      <div class="section-head" style="margin-top:34px"><h2>Your about-data.js</h2></div>
+      <textarea class="writer-output" id="amOutput" readonly spellcheck="false"></textarea>
+      <div class="news-edit-row" style="margin-top:12px">
+        <button class="btn btn-solid btn-small" id="amDownload">Download about-data.js</button>
+        <button class="btn btn-small" id="amCopy">Copy to clipboard</button>
+        <button class="btn btn-ghost btn-small" id="amReset">Discard changes</button>
+      </div>
+    </div>
+  </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap"><div>LO&#8217;PRIMO &middot; private editing tool.</div></div>
+  </footer>
+
+  <script src="assets/about-data.js"></script>
+  <script src="assets/about-writer.js"></script>
+</body>
+</html>

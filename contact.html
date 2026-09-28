@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contacto | LO'PRIMO</title>
+  <meta name="description" content="LO'PRIMO — contrataciones, prensa y contacto.">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="LO'PRIMO">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="icon" type="image/png" href="images/logo.png">
+  <link rel="apple-touch-icon" href="images/logo.png">
+  <link rel="manifest" href="manifest.json">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-row">
+      <a class="brand" href="index.html">
+        <img class="brand-logo" src="images/logo.png" alt="LO'PRIMO">
+      </a>
+      <button class="nav-toggle" id="navToggle" aria-label="Mostrar menú" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+      <nav class="site-nav" id="siteNav">
+        <a href="index.html" data-nav="home">Inicio</a>
+        <a href="about.html" data-nav="about">Nosotros</a>
+        <a href="shows.html" data-nav="shows">Shows</a>
+        <a href="music.html" data-nav="music">Música</a>
+        <a href="contact.html" data-nav="contact" class="active">Contacto</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+  <section class="hero" style="padding:44px 0 34px">
+    <div class="wrap">
+      <div class="hero-kicker">Cont&aacute;ctanos</div>
+      <h1 style="font-size:clamp(1.7rem,4vw,2.6rem)">Contrataciones, prensa<br class="hide-mobile"> <span class="accent">o lo que sea.</span></h1>
+      <p style="color:var(--espresso-soft);max-width:60ch;margin:12px 0 0">Escr&iacute;benos aqu&iacute; y te respondemos lo antes posible.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap" style="max-width:640px">
+      <form id="contactForm" class="editor-panel" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+        <!--
+          SETUP: this form posts to Formspree so a real email reaches
+          your inbox with no server of your own. Free, five minutes:
+            1. Go to formspree.io and sign up with the band's email
+            2. Create a new form, confirm the verification email
+            3. Copy the endpoint it gives you (https://formspree.io/f/xxxxxxx)
+            4. Paste it in as the action= above, replacing YOUR_FORM_ID
+            5. Also update SITE_CONTACT_EMAIL below and the mailto link
+               further down this file
+          Until you do that last step, the form will show a message
+          telling visitors to email you directly instead.
+        -->
+        <div class="field">
+          <label for="cfName">Nombre</label>
+          <input id="cfName" name="name" type="text" required>
+        </div>
+        <div class="field">
+          <label for="cfEmail">Email</label>
+          <input id="cfEmail" name="email" type="email" required>
+        </div>
+        <div class="field">
+          <label for="cfReasonBtn">Sobre qu&eacute; nos escribes?</label>
+          <div class="custom-select">
+            <button type="button" class="custom-select-btn" id="cfReasonBtn" aria-haspopup="listbox" aria-expanded="false">
+              <span class="custom-select-value">Contrataciones / Shows</span>
+              <svg class="custom-select-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <ul class="custom-select-list" role="listbox" tabindex="-1" hidden>
+              <li role="option" aria-selected="true" data-value="Contrataciones / Shows">Contrataciones / Shows</li>
+              <li role="option" aria-selected="false" data-value="Prensa">Prensa</li>
+              <li role="option" aria-selected="false" data-value="Mensaje de fan">Mensaje de fan</li>
+              <li role="option" aria-selected="false" data-value="Algo mas">Algo m&aacute;s</li>
+            </ul>
+            <input type="hidden" id="cfReason" name="reason" value="Contrataciones / Shows">
+          </div>
+        </div>
+        <div class="field">
+          <label for="cfMessage">Mensaje</label>
+          <textarea id="cfMessage" name="message" rows="5" required></textarea>
+        </div>
+        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+        <input type="hidden" name="_subject" value="New message from the LO'PRIMO contact form">
+        <button class="btn btn-solid" type="submit" id="cfSubmit">Enviar</button>
+        <p class="section-note" id="cfStatus" style="margin-top:14px" role="status" aria-live="polite"></p>
+      </form>
+
+      <p class="section-note" style="margin-top:22px;text-align:center">
+        Prefieres email directo? Escr&iacute;benos a <a href="mailto:hello@loprimomusic.com">hello@loprimomusic.com</a>,
+        o s&iacute;guenos en <a href="https://instagram.com/loprimofficial" target="_blank" rel="noopener noreferrer">Instagram</a>.
+      </p>
+    </div>
+  </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div>LO&#8217;PRIMO &middot; Pop dominicano desde 2013</div>
+      <div class="footer-social" id="footerSocial" aria-label="Redes de LO'PRIMO"></div>
+    </div>
+  </footer>
+
+  <script>window.SITE_CONTACT_EMAIL = "hello@loprimomusic.com";</script>
+  <script src="assets/about-data.js"></script>
+  <script src="assets/shows-data.js"></script>
+  <script src="assets/music-data.js"></script>
+  <script src="assets/posts-data.js"></script>
+  <script src="assets/app.js"></script>
+</body>
+</html>

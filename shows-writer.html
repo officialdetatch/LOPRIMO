@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Shows writer | LO'PRIMO</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-row">
+      <a class="brand" href="index.html">
+        <span class="crest">
+          <img src="images/logo.png" alt="LO'PRIMO logo" onerror="this.remove()">
+          <span class="crest-fallback">LP</span>
+        </span>
+        <span class="brand-text">
+          <span class="brand-name">LO&#8217;PRIMO</span>
+          <div class="brand-sub">Private tool</div>
+        </span>
+      </a>
+    </div>
+  </header>
+
+  <main>
+  <section class="hero" style="padding:38px 0 28px">
+    <div class="wrap">
+      <div class="hero-kicker">Private tool &middot; not linked from the site</div>
+      <h1 style="font-size:clamp(1.6rem,3.5vw,2.3rem)">Shows <span class="accent">writer</span></h1>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:34px">
+    <div class="wrap">
+      <div class="writer-note">
+        Add or edit show dates here, then press <b>Download shows-data.js</b> and drop the file
+        into <code>assets/</code>, replacing the old one. The public site sorts dates
+        automatically, so you don't need to keep this list in order. Delete
+        <code>shows-writer.html</code> and <code>assets/shows-writer.js</code> before uploading if
+        you would rather this page never leaves your computer.
+      </div>
+      <div class="writer-note hidden" id="wDraftNote">You have unsaved changes from a previous session, loaded below.</div>
+
+      <p class="section-note"><a href="about-writer.html">About writer</a> &middot; <a href="music-writer.html">Music writer</a> &middot; <a href="posts-writer.html">Posts writer</a></p>
+
+      <div class="editor-panel">
+        <h3 id="wFormTitle">New show</h3>
+        <div class="writer-grid">
+          <div class="field">
+            <label for="wDate">Date</label>
+            <input id="wDate" type="date">
+          </div>
+          <div class="field">
+            <label for="wStatus">Status</label>
+            <select id="wStatus" class="custom-select-btn" style="background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:10px 12px">
+              <option value="upcoming">Upcoming</option>
+              <option value="past">Past</option>
+            </select>
+          </div>
+        </div>
+        <div class="writer-grid">
+          <div class="field">
+            <label for="wCity">City</label>
+            <input id="wCity" type="text" placeholder="Santo Domingo">
+          </div>
+          <div class="field">
+            <label for="wVenue">Venue (optional)</label>
+            <input id="wVenue" type="text" placeholder="Teatro La Fiesta">
+          </div>
+        </div>
+        <div class="field">
+          <label for="wTicketUrl">Ticket link (optional)</label>
+          <input id="wTicketUrl" type="text" placeholder="https://...">
+        </div>
+        <div class="field">
+          <label for="wNote">Note (optional)</label>
+          <input id="wNote" type="text" placeholder="Con banda invitada">
+        </div>
+        <div class="field">
+          <label for="wId">Link name (optional &mdash; made automatically if blank)</label>
+          <input id="wId" type="text" placeholder="santo-domingo-2026">
+        </div>
+        <div class="news-edit-row">
+          <button class="btn btn-solid btn-small" id="wSave">Add show</button>
+          <button class="btn btn-ghost btn-small" id="wClear">Clear form</button>
+        </div>
+      </div>
+
+      <div class="section-head"><h2>Shows</h2></div>
+      <div id="wList"></div>
+
+      <div class="section-head" style="margin-top:34px"><h2>Your shows-data.js</h2></div>
+      <textarea class="writer-output" id="wOutput" readonly spellcheck="false"></textarea>
+      <div class="news-edit-row" style="margin-top:12px">
+        <button class="btn btn-solid btn-small" id="wDownload">Download shows-data.js</button>
+        <button class="btn btn-small" id="wCopy">Copy to clipboard</button>
+        <button class="btn btn-ghost btn-small" id="wReset">Discard changes</button>
+      </div>
+    </div>
+  </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap"><div>LO&#8217;PRIMO &middot; private editing tool.</div></div>
+  </footer>
+
+  <script src="assets/shows-data.js"></script>
+  <script src="assets/shows-writer.js"></script>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Music writer | LO'PRIMO</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-row">
+      <a class="brand" href="index.html">
+        <span class="crest">
+          <img src="images/logo.png" alt="LO'PRIMO logo" onerror="this.remove()">
+          <span class="crest-fallback">LP</span>
+        </span>
+        <span class="brand-text">
+          <span class="brand-name">LO&#8217;PRIMO</span>
+          <div class="brand-sub">Private tool</div>
+        </span>
+      </a>
+    </div>
+  </header>
+
+  <main>
+  <section class="hero" style="padding:38px 0 28px">
+    <div class="wrap">
+      <div class="hero-kicker">Private tool &middot; not linked from the site</div>
+      <h1 style="font-size:clamp(1.6rem,3.5vw,2.3rem)">Music <span class="accent">writer</span></h1>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:34px">
+    <div class="wrap">
+      <div class="writer-note">
+        Add or edit singles here, then press <b>Download music-data.js</b> and drop the file into
+        <code>assets/</code>, replacing the old one. Newest single goes to the top of the list -
+        that's the one embedded on the home page. Paste a normal YouTube link (watch?v=... or
+        youtu.be/...) and the video ID is pulled out automatically. Delete
+        <code>music-writer.html</code> and <code>assets/music-writer.js</code> before uploading if
+        you would rather this page never leaves your computer.
+      </div>
+      <div class="writer-note hidden" id="wDraftNote">You have unsaved changes from a previous session, loaded below.</div>
+
+      <p class="section-note"><a href="about-writer.html">About writer</a> &middot; <a href="shows-writer.html">Shows writer</a> &middot; <a href="posts-writer.html">Posts writer</a></p>
+
+      <div class="editor-panel">
+        <h3 id="wFormTitle">New single</h3>
+        <div class="writer-grid">
+          <div class="field">
+            <label for="wTitle">Title</label>
+            <input id="wTitle" type="text" placeholder="Nombre Del Sencillo">
+          </div>
+          <div class="field">
+            <label for="wReleaseDate">Release label</label>
+            <input id="wReleaseDate" type="text" placeholder="2026 &middot; Sencillo">
+          </div>
+        </div>
+        <div class="field">
+          <label for="wYoutubeUrl">YouTube link</label>
+          <input id="wYoutubeUrl" type="text" placeholder="https://www.youtube.com/watch?v=...">
+        </div>
+        <div class="writer-grid">
+          <div class="field">
+            <label for="wSpotifyUrl">Spotify link (optional)</label>
+            <input id="wSpotifyUrl" type="text" placeholder="https://open.spotify.com/track/...">
+          </div>
+          <div class="field">
+            <label for="wAppleUrl">Apple Music link (optional)</label>
+            <input id="wAppleUrl" type="text" placeholder="https://music.apple.com/...">
+          </div>
+        </div>
+        <div class="field">
+          <label for="wCover">Cover image path (optional &mdash; only used if there's no video yet)</label>
+          <input id="wCover" type="text" placeholder="images/music/cover.jpg">
+        </div>
+        <div class="field">
+          <label for="wBlurb">Short note (optional)</label>
+          <input id="wBlurb" type="text" placeholder="One line about the track.">
+        </div>
+        <div class="field">
+          <label for="wId">Link name (optional &mdash; made from the title if blank)</label>
+          <input id="wId" type="text" placeholder="nombre-del-sencillo">
+        </div>
+        <div class="news-edit-row">
+          <button class="btn btn-solid btn-small" id="wSave">Add single</button>
+          <button class="btn btn-ghost btn-small" id="wClear">Clear form</button>
+        </div>
+      </div>
+
+      <div class="section-head"><h2>Singles</h2>
+        <span class="section-note">Top of the list is the one on the home page.</span>
+      </div>
+      <div id="wList"></div>
+
+      <div class="section-head" style="margin-top:34px"><h2>Your music-data.js</h2></div>
+      <textarea class="writer-output" id="wOutput" readonly spellcheck="false"></textarea>
+      <div class="news-edit-row" style="margin-top:12px">
+        <button class="btn btn-solid btn-small" id="wDownload">Download music-data.js</button>
+        <button class="btn btn-small" id="wCopy">Copy to clipboard</button>
+        <button class="btn btn-ghost btn-small" id="wReset">Discard changes</button>
+      </div>
+    </div>
+  </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap"><div>LO&#8217;PRIMO &middot; private editing tool.</div></div>
+  </footer>
+
+  <script src="assets/music-data.js"></script>
+  <script src="assets/music-writer.js"></script>
+</body>
+</html>
