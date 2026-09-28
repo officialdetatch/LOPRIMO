@@ -56,9 +56,6 @@
       return copy;
     });
   }
-  function posts() {
-    return (window.LATEST_POSTS || []).slice();
-  }
 
   /* ---------- mobile menu ---------- */
   var toggle = document.getElementById('navToggle');
@@ -274,42 +271,54 @@
       : '<p class="section-note">Todav\u00eda no hay sencillos publicados \u2014 agrega uno en assets/music-data.js o con music-writer.html.</p>';
   }
 
-  /* ---------- home page singles: last 3, as cards (same format as music.html) ---------- */
-  var homeSinglesGrid = document.getElementById('homeSinglesGrid');
-  if (homeSinglesGrid) {
-    var latestThree = singles().slice(0, 3);
-    homeSinglesGrid.innerHTML = latestThree.length
-      ? latestThree.map(singleCardHTML).join('')
-      : '<p class="section-note">Todav\u00eda no hay sencillos publicados. <a href="music.html">Revisa la p\u00e1gina de m\u00fasica</a>.</p>';
+  /* ---------- pagina-live: featured Spotify embed (from the newest single) ---------- */
+  function spotifyEmbedUrl(url) {
+    if (!url) return '';
+    return String(url).replace(/open\.spotify\.com\/(track|album|artist|playlist)\//, 'open.spotify.com/embed/$1/');
+  }
+  var spotifyMount = document.getElementById('spotifyEmbed');
+  if (spotifyMount) {
+    var featured = singles()[0];
+    var embedUrl = featured ? spotifyEmbedUrl(featured.spotify_url) : '';
+    spotifyMount.innerHTML = embedUrl
+      ? '<div class="spotify-embed-wrap"><iframe src="' + esc(embedUrl) + '" height="352" frameborder="0" allowfullscreen loading="lazy" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe></div>'
+      : '<p class="section-note" style="text-align:center">A&uacute;n no hay un enlace de Spotify cargado para el sencillo m&aacute;s reciente &mdash; agr&eacute;galo en music-writer.html.</p>';
   }
 
-  /* ---------- latest instagram posts (official embeds) ---------- */
-  var igGrid = document.getElementById('igGrid');
-  if (igGrid) {
-    var allPosts = posts();
-    if (!allPosts.length) {
-      var igUrl = (window.BAND_ABOUT && window.BAND_ABOUT.socials && window.BAND_ABOUT.socials.instagram) || '';
-      igGrid.innerHTML = '<div class="ig-fallback"><div class="eyebrow">Instagram</div>' +
-        '<p class="section-note">Todav\u00eda no hay posts cargados aqu\u00ed. Agrega enlaces en posts-writer.html.</p>' +
-        (igUrl ? '<a class="btn btn-small" href="' + esc(igUrl) + '" target="_blank" rel="noopener noreferrer">Ver Instagram</a>' : '') +
-        '</div>';
-    } else {
-      igGrid.innerHTML = allPosts.map(function (p) {
-        return '<blockquote class="instagram-media" data-instgrm-permalink="' + esc(p.url) + '" data-instgrm-version="14">' +
-          '<a href="' + esc(p.url) + '" target="_blank" rel="noopener noreferrer">' + esc(p.caption || 'Ver en Instagram') + '</a>' +
-        '</blockquote>';
-      }).join('');
-      var processEmbeds = function () { if (window.instgrm && window.instgrm.Embeds) window.instgrm.Embeds.process(); };
-      if (window.instgrm && window.instgrm.Embeds) {
-        processEmbeds();
-      } else {
-        var s = document.createElement('script');
-        s.async = true;
-        s.src = 'https://www.instagram.com/embed.js';
-        s.onload = processEmbeds;
-        document.body.appendChild(s);
+  /* ---------- pagina-live: one main video + two secondary ones ---------- */
+  var videoMain = document.getElementById('videoMain');
+  if (videoMain) {
+    var vids = singles().filter(function (s) { return s.youtube_id || youtubeIdFromUrl(s.youtube_url); });
+    if (vids.length) {
+      var main = vids[0];
+      var mainId = main.youtube_id || youtubeIdFromUrl(main.youtube_url);
+      videoMain.innerHTML = '<div class="video-embed"><iframe src="https://www.youtube.com/embed/' + esc(mainId) + '" title="' + esc(main.title) + '" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>';
+      var secMount = document.getElementById('videoSecondary');
+      if (secMount) {
+        var rest = vids.slice(1, 3);
+        secMount.innerHTML = rest.map(function (v) {
+          var vid = v.youtube_id || youtubeIdFromUrl(v.youtube_url);
+          return '<div><div class="video-embed"><iframe src="https://www.youtube.com/embed/' + esc(vid) + '" title="' + esc(v.title) + '" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div><div class="yt-caption">' + esc(v.title) + '</div></div>';
+        }).join('');
       }
+    } else {
+      videoMain.innerHTML = '<p class="section-note" style="text-align:center">Todav\u00eda no hay videos cargados \u2014 agrega uno en music-writer.html.</p>';
     }
+  }
+
+  /* ---------- header social icons (desktop, right side) ---------- */
+  var NAV_SOCIAL_ORDER = ['instagram', 'facebook', 'spotify', 'youtube'];
+  function navSocialHTML(socials) {
+    socials = socials || {};
+    return NAV_SOCIAL_ORDER.map(function (key) {
+      var url = socials[key];
+      if (!url) return '';
+      return '<a class="social-link" href="' + esc(url) + '" target="_blank" rel="noopener noreferrer" aria-label="' + SOCIAL_LABELS[key] + '">' + SOCIAL_ICONS[key] + '</a>';
+    }).join('');
+  }
+  var navSocial = document.getElementById('navSocial');
+  if (navSocial) {
+    navSocial.innerHTML = navSocialHTML(window.BAND_ABOUT && window.BAND_ABOUT.socials);
   }
 
   /* ---------- custom select dropdowns (contact page) ---------- */
