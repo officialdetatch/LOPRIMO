@@ -123,6 +123,38 @@
         var timer = setInterval(function () { if (!tick()) clearInterval(timer); }, 1000);
       }
     })();
+
+    const playlist = [
+      "audio/CHIQUITITA - LO'PRIMO.mp3",
+      "audio/INEVITABLE - LO'PRIMO (Official Audio).mp3",
+      "audio/LOPRIMO - UN BESO TUYO (Etapa 8 La Cura).mp3",
+      "audio/Miguel Bosé - Morena Mía (LO'PRIMO - Cover).mp3",
+      "audio/Lo Que Quiero Ser - LO'PRIMO (Lyric Video).mp3"
+    ];
+    const music = new Audio();
+    music.volume = 0.033;
+    let lastSong = -1;
+
+    function playRandomSong() {
+    let randomSong;
+    do {
+        randomSong = Math.floor(Math.random() * playlist.length);
+    } while (playlist.length > 1 && randomSong === lastSong);
+
+    lastSong = randomSong;
+    music.src = playlist[randomSong];
+
+    music.play().catch(() => {});
+    }
+
+    music.addEventListener("ended", playRandomSong);
+
+    playRandomSong();
+    document.addEventListener("click", () => {
+      if (music.paused) {
+        music.play().catch(() => {});
+      }
+    }, { once: true });
   </script>
 </body>
 </html>
