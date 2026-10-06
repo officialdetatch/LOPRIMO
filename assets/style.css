@@ -215,6 +215,22 @@ h1,h2,h3,h4{
   .nav-social .social-link{ width:34px; height:34px; }
 }
 
+/* ---------- minimal header (pagina-live one-pager: logo + socials only,
+   no multi-page nav since the site is a single page now) ---------- */
+.header-row.minimal{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  grid-template-areas:none;
+}
+.header-row.minimal .nav-social{
+  display:flex; align-items:center; gap:8px;
+}
+.header-row.minimal .nav-social .social-link{ width:30px; height:30px; }
+@media (min-width:481px){
+  .header-row.minimal .nav-social .social-link{ width:34px; height:34px; }
+}
+
 /* ---------- hero ---------- */
 .hero{
   position:relative;
@@ -327,6 +343,142 @@ h1,h2,h3,h4{
   .yt-secondary-grid{ grid-template-columns:1fr; }
   .hero-full{ height:78vh; min-height:420px; background-position:center 22%; }
 }
+
+/* ---------- splash page (pagina-live): the ENTIRE page is the photo,
+   text overlaid, footer pinned at the bottom of the same image — no
+   header bar, no other sections. The simplest page on the site. ---------- */
+.splash{
+  position:relative;
+  min-height:100vh;
+  background-size:cover;
+  background-position:center 40%;
+  background-repeat:no-repeat;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding:52px 0 26px;
+}
+.splash-scrim{
+  position:absolute; inset:0;
+  background:linear-gradient(180deg, rgba(44,34,30,.6) 0%, rgba(44,34,30,.45) 38%, rgba(44,34,30,.85) 100%);
+  pointer-events:none;
+}
+.splash-content{
+  position:relative; z-index:1;
+  flex:1;
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  text-align:center;
+  padding:30px 0;
+}
+.splash-footer{
+  position:relative; z-index:1;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:12px;
+  text-align:center;
+  color:var(--sand);
+}
+.splash-footer .footer-follow-label{ color:var(--sand-dim); }
+@media (max-width:640px){
+  .splash{ padding:40px 0 22px; }
+}
+.announce-heading{
+  font-family:var(--font-display);
+  font-weight:700;
+  color:var(--amber-light);
+  font-size:clamp(2.6rem, 9vw, 5.5rem);
+  line-height:1;
+  margin:0 0 16px;
+  letter-spacing:.01em;
+}
+.announce-line{
+  color:var(--sand);
+  font-family:var(--font-display);
+  font-weight:600;
+  font-size:clamp(1.3rem, 3.6vw, 2.1rem);
+  line-height:1.3;
+  margin:0 0 18px;
+}
+.announce-sub{
+  color:var(--sand-dim);
+  font-size:clamp(1rem, 2vw, 1.15rem);
+  line-height:1.55;
+  max-width:46ch;
+  margin:0 auto 8px;
+}
+.announce-footer-note{
+  color:var(--sand-dim);
+  font-size:.92rem;
+  line-height:1.6;
+  margin:32px auto 0;
+  max-width:40ch;
+  opacity:.9;
+}
+@media (max-width:640px){
+  .splash{ background-position:center 38%; }
+}
+
+/* ---------- save the date: clickable date -> calendar menu ---------- */
+.save-the-date-card{
+  margin:26px auto 0;
+  display:inline-flex;
+  flex-direction:column;
+  align-items:center;
+  position:relative;
+}
+.std-eyebrow{
+  display:block;
+  font-family:var(--font-display);
+  font-weight:700;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  font-size:.82rem;
+  color:var(--amber-light);
+  margin-bottom:10px;
+}
+.std-date-btn{
+  display:inline-flex; align-items:center; gap:10px;
+  font-family:var(--font-display);
+  font-weight:700;
+  font-size:clamp(1.1rem, 3vw, 1.55rem);
+  letter-spacing:.02em;
+  color:var(--espresso);
+  background:var(--amber);
+  border:2px solid var(--amber-dark);
+  border-radius:999px;
+  padding:15px 26px;
+  cursor:pointer;
+  transition:background-color .15s ease, transform .15s ease;
+}
+.std-date-btn:hover{ background:var(--amber-light); transform:translateY(-2px); }
+.std-chevron{ width:17px; height:17px; flex:none; transition:transform .15s ease; }
+.std-date-btn[aria-expanded="true"] .std-chevron{ transform:rotate(180deg); }
+.std-menu{
+  position:absolute; top:calc(100% + 10px); left:50%; transform:translateX(-50%);
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow-md);
+  padding:8px;
+  min-width:230px;
+  z-index:5;
+  text-align:left;
+}
+.std-menu-link{
+  display:block;
+  padding:10px 14px;
+  font-family:var(--font-body);
+  font-size:.92rem;
+  font-weight:600;
+  color:var(--espresso);
+  border-radius:4px;
+  white-space:nowrap;
+}
+.std-menu-link:hover{ background:var(--sand-dim); }
 
 /* ---------- section shell ---------- */
 .section{ padding:52px 0; }
@@ -793,6 +945,20 @@ h1,h2,h3,h4{
   background:var(--amber);
 }
 
+/* real logo badges (images/social/*.webp) sit on a dark espresso
+   disc since the source files are white-on-transparent. */
+.social-link-img{
+  background:var(--espresso);
+  border-color:var(--espresso);
+}
+.social-link-img img{
+  width:17px; height:17px; display:block;
+}
+.social-link-img:hover{
+  background:var(--amber);
+  border-color:var(--amber-dark);
+}
+
 /* ---------- footer ---------- */
 .site-footer{
   border-top:1px solid var(--sand-dim);
@@ -804,6 +970,26 @@ h1,h2,h3,h4{
   display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap; align-items:center;
 }
 .footer-social{ display:flex; gap:10px; align-items:center; }
+
+/* pagina-live footer: band line + "Siguenos..." + socials, stacked
+   on mobile, side by side on wider screens */
+.footer-stack{
+  flex-direction:column; align-items:center; text-align:center; gap:16px;
+}
+.footer-follow{
+  display:flex; flex-direction:column; align-items:center; gap:10px;
+}
+.footer-follow-label{
+  font-family:var(--font-display);
+  font-weight:600;
+  font-size:.82rem;
+  letter-spacing:.04em;
+  color:var(--espresso-soft);
+}
+@media (min-width:640px){
+  .footer-stack{ flex-direction:row; justify-content:space-between; text-align:left; }
+  .footer-follow{ flex-direction:row; gap:12px; }
+}
 
 @media (max-width:600px){
   .hero{ padding:38px 0 30px; }
