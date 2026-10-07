@@ -1,92 +1,20 @@
-/* Site behaviour for LO'PRIMO. Every block checks that its element
-   exists first, so deleting a chunk of HTML can never take the rest
-   of the page down with it. */
+/* Site behaviour for LO'PRIMO. The site is now a single page
+   (index.html) — a "save the date" splash — so this file only
+   carries what that page actually uses: the footer's real social
+   logo links and the save-the-date calendar menu. Every block still
+   checks that its element exists first, so trimming a chunk of HTML
+   can never take the rest of the page down with it. */
 (function () {
   'use strict';
-
-  /* Replace this with the band's real inbox once you have one -
-     it's only used for the "couldn't send" fallback messages. */
-  var CONTACT_EMAIL = window.SITE_CONTACT_EMAIL || 'info@loprimofficial.vip';
-
-  var MONTHS_ES = ['ENE', 'FEB', 'MAR', 'ABR', 'MAY', 'JUN', 'JUL', 'AGO', 'SEP', 'OCT', 'NOV', 'DIC'];
-  var MONTHS_ES_FULL = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
 
   function esc(s) {
     return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) {
       return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
     });
   }
-  function slug(s) {
-    return String(s || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-  }
-  function parseDate(d) {
-    if (!d) return null;
-    var parts = String(d).split('-');
-    if (parts.length !== 3) return null;
-    var dt = new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]));
-    return isNaN(dt.getTime()) ? null : dt;
-  }
-  function fmtDateBadge(d) {
-    var dt = parseDate(d);
-    if (!dt) return { day: '--', mon: '' };
-    return { day: dt.getDate(), mon: MONTHS_ES[dt.getMonth()] };
-  }
-  function fmtDateLong(d) {
-    var dt = parseDate(d);
-    if (!dt) return '';
-    return dt.getDate() + ' de ' + MONTHS_ES_FULL[dt.getMonth()] + ', ' + dt.getFullYear();
-  }
 
-  function shows() {
-    var list = window.SHOWS || [];
-    return list.map(function (s, i) {
-      var copy = {};
-      for (var k in s) { if (Object.prototype.hasOwnProperty.call(s, k)) copy[k] = s[k]; }
-      copy.id = copy.id || slug(copy.city + '-' + copy.date) || ('show-' + (i + 1));
-      copy.status = copy.status === 'past' ? 'past' : 'upcoming';
-      return copy;
-    });
-  }
-  function singles() {
-    var list = window.SINGLES || [];
-    return list.map(function (s, i) {
-      var copy = {};
-      for (var k in s) { if (Object.prototype.hasOwnProperty.call(s, k)) copy[k] = s[k]; }
-      copy.id = copy.id || slug(copy.title) || ('single-' + (i + 1));
-      return copy;
-    });
-  }
-
-  /* ---------- mobile menu ---------- */
-  var toggle = document.getElementById('navToggle');
-  var nav = document.getElementById('siteNav');
-  if (toggle && nav) {
-    toggle.addEventListener('click', function () {
-      var open = nav.classList.toggle('open');
-      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-    });
-  }
-
-  /* ---------- footer + about social icons ---------- */
-  var SOCIAL_ICONS = {
-    instagram: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5.5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".9" fill="currentColor" stroke="none"/></svg>',
-    youtube: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><rect x="2.5" y="5.5" width="19" height="13" rx="4"/><path d="M10.5 9.2 15 12l-4.5 2.8z" fill="currentColor" stroke="none"/></svg>',
-    facebook: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.7"/><text x="12" y="16.5" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor" font-family="Georgia, serif">f</text></svg>',
-    spotify: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.7"/><text x="12" y="16" text-anchor="middle" font-size="11" font-weight="700" fill="currentColor" font-family="Arial, sans-serif">S</text></svg>'
-  };
+  /* ---------- footer social icons (real logo badges, images/social/*.webp) ---------- */
   var SOCIAL_LABELS = { instagram: 'Instagram', youtube: 'YouTube', facebook: 'Facebook', spotify: 'Spotify' };
-  function socialLinksHTML(socials) {
-    socials = socials || {};
-    return Object.keys(SOCIAL_ICONS).map(function (key) {
-      var url = socials[key];
-      if (!url) return '';
-      return '<a class="social-link" href="' + esc(url) + '" target="_blank" rel="noopener noreferrer" aria-label="' + SOCIAL_LABELS[key] + '">' + SOCIAL_ICONS[key] + '</a>';
-    }).join('');
-  }
-
-  /* real logo badges (images/social/*.webp) — used on pagina-live's
-     header + footer, per the band's own social-logo files instead of
-     the generic inline icons above. */
   var SOCIAL_IMG = {
     instagram: 'images/social/instagram.webp',
     facebook: 'images/social/facebook.webp',
@@ -105,239 +33,6 @@
   var footerSocial = document.getElementById('footerSocial');
   if (footerSocial) {
     footerSocial.innerHTML = socialImgLinksHTML(window.BAND_ABOUT && window.BAND_ABOUT.socials);
-  }
-
-  /* ---------- about page ---------- */
-  var aboutBody = document.getElementById('aboutBody');
-  if (aboutBody) {
-    var about = window.BAND_ABOUT || {};
-    var aboutTitleEl = document.getElementById('aboutTitle');
-    var aboutLedeEl = document.getElementById('aboutLede');
-    if (aboutTitleEl && about.title) aboutTitleEl.textContent = about.title;
-    if (aboutLedeEl) aboutLedeEl.textContent = about.lede || '';
-    var aboutBlocks = about.blocks || [];
-    aboutBody.innerHTML = aboutBlocks.length ? aboutBlocks.map(function (b) {
-      if (b.type === 'image' && b.src) {
-        return '<figure class="article-figure"><img src="' + esc(b.src) + '" alt="' + esc(b.caption || '') + '" onerror="this.closest(\'figure\').remove()">' +
-          (b.caption ? '<figcaption>' + esc(b.caption) + '</figcaption>' : '') + '</figure>';
-      }
-      return '<p>' + esc(b.text || '') + '</p>';
-    }).join('') : '<p class="section-note">Nada por aqu\u00ed todav\u00eda \u2014 agrega algo en about-writer.html.</p>';
-    var aboutSocials = document.getElementById('aboutSocials');
-    if (aboutSocials) aboutSocials.innerHTML = socialLinksHTML(about.socials);
-  }
-
-  /* ---------- band members (about page) ---------- */
-  var membersGrid = document.getElementById('aboutMembers');
-  if (membersGrid) {
-    var members = (window.BAND_ABOUT && window.BAND_ABOUT.members) || [];
-    membersGrid.innerHTML = members.length ? members.map(function (m) {
-      var photo = m.photo
-        ? '<div class="member-photo"><img src="' + esc(m.photo) + '" alt="' + esc(m.name || '') + '" onerror="this.remove()"></div>'
-        : '<div class="member-photo"><span class="crest-fallback" style="position:static;width:100%;height:100%;display:flex">' + esc((m.name || '?').charAt(0)) + '</span></div>';
-      return '<div class="card member-card">' + photo +
-        '<h3>' + esc(m.name || '') + '</h3>' +
-        (m.role ? '<div class="eyebrow">' + esc(m.role) + '</div>' : '') +
-        (m.bio ? '<p>' + esc(m.bio) + '</p>' : '') +
-        (m.instagram ? '<div class="social-row member-social">' + socialLinksHTML({ instagram: m.instagram }) + '</div>' : '') +
-      '</div>';
-    }).join('') : '<p class="section-note">Todav\u00eda no hay integrantes cargados \u2014 agr\u00e9galos en about-writer.html.</p>';
-  }
-
-  /* ---------- show cards ---------- */
-  function showCardHTML(s) {
-    var badge = fmtDateBadge(s.date);
-    var ticket = s.ticket_url
-      ? '<a class="btn btn-solid btn-small" href="' + esc(s.ticket_url) + '" target="_blank" rel="noopener noreferrer">Boletos</a>'
-      : '';
-    return '<div class="show-card">' +
-      '<div class="show-date"><span class="d">' + esc(badge.day) + '</span><span class="m">' + esc(badge.mon) + '</span></div>' +
-      '<div class="show-main">' +
-        '<h3>' + esc(s.city) + '</h3>' +
-        (s.venue ? '<div class="venue">' + esc(s.venue) + '</div>' : '') +
-        (s.note ? '<div class="section-note">' + esc(s.note) + '</div>' : '') +
-      '</div>' +
-      '<span class="show-tag' + (s.status === 'past' ? ' past' : '') + '">' + (s.status === 'past' ? 'Ya pas\u00f3' : 'Pr\u00f3ximo') + '</span>' +
-      ticket +
-    '</div>';
-  }
-
-  /* ---------- shows page: split lists + filter tabs (Todos/Pr\u00f3ximos/Anteriores) ---------- */
-  var showsUpcomingEl = document.getElementById('showsUpcoming');
-  var showsPastEl = document.getElementById('showsPast');
-  if (showsUpcomingEl || showsPastEl) {
-    var all = shows();
-    var up = all.filter(function (s) { return s.status !== 'past'; }).sort(function (a, b) { return parseDate(a.date) - parseDate(b.date); });
-    var past = all.filter(function (s) { return s.status === 'past'; }).sort(function (a, b) { return parseDate(b.date) - parseDate(a.date); });
-
-    if (showsUpcomingEl) {
-      showsUpcomingEl.innerHTML = up.length ? up.map(showCardHTML).join('') : '<p class="section-note">Todav\u00eda no hay fechas anunciadas \u2014 estamos de vuelta y preparando todo. S\u00edguenos en redes para ser los primeros en enterarte.</p>';
-    }
-    var pastBlock = document.getElementById('showsPastBlock');
-    if (showsPastEl) showsPastEl.innerHTML = past.map(showCardHTML).join('');
-    if (pastBlock && !past.length) pastBlock.classList.add('hidden');
-
-    var upcomingBlock = document.getElementById('showsUpcomingBlock');
-    var tabs = document.querySelectorAll('#showsFilterTabs .filter-tab');
-    for (var ti = 0; ti < tabs.length; ti++) {
-      (function (btn) {
-        btn.addEventListener('click', function () {
-          for (var tj = 0; tj < tabs.length; tj++) tabs[tj].classList.toggle('active', tabs[tj] === btn);
-          var f = btn.getAttribute('data-filter');
-          if (upcomingBlock) upcomingBlock.classList.toggle('hidden', f === 'past');
-          if (pastBlock) {
-            if (f === 'past') pastBlock.classList.remove('hidden');
-            else if (f === 'upcoming') pastBlock.classList.add('hidden');
-            else pastBlock.classList.toggle('hidden', !past.length);
-          }
-        });
-      })(tabs[ti]);
-    }
-  }
-
-  /* ---------- home: next-show banner with a live countdown ---------- */
-  function nextShowBannerHTML(s) {
-    var ticket = s.ticket_url
-      ? '<a class="btn btn-solid btn-small nsb-cta" href="' + esc(s.ticket_url) + '" target="_blank" rel="noopener noreferrer">Boletos</a>'
-      : '';
-    return '<div class="next-show-banner">' +
-      '<div class="nsb-info">' +
-        '<div class="nsb-label">Pr\u00f3ximo show</div>' +
-        '<h3>' + esc(s.city) + '</h3>' +
-        '<div class="venue">' + (s.venue ? esc(s.venue) + ' \u00b7 ' : '') + fmtDateLong(s.date) + '</div>' +
-      '</div>' +
-      '<div class="nsb-countdown">' +
-        '<div class="nsb-unit"><span class="nsb-num" id="cdD">00</span><span class="nsb-label-sm">D\u00edas</span></div>' +
-        '<div class="nsb-unit"><span class="nsb-num" id="cdH">00</span><span class="nsb-label-sm">Hrs</span></div>' +
-        '<div class="nsb-unit"><span class="nsb-num" id="cdM">00</span><span class="nsb-label-sm">Min</span></div>' +
-        '<div class="nsb-unit"><span class="nsb-num" id="cdS">00</span><span class="nsb-label-sm">Seg</span></div>' +
-      '</div>' +
-      ticket +
-    '</div>';
-  }
-  function startCountdown(dateStr) {
-    var target = parseDate(dateStr);
-    if (!target) return;
-    var targetTime = target.getTime();
-    var pad = function (n) { return n < 10 ? '0' + n : '' + n; };
-    function tick() {
-      var diff = Math.max(0, targetTime - Date.now());
-      var d = Math.floor(diff / 86400000);
-      var h = Math.floor((diff % 86400000) / 3600000);
-      var m = Math.floor((diff % 3600000) / 60000);
-      var sec = Math.floor((diff % 60000) / 1000);
-      var elD = document.getElementById('cdD'), elH = document.getElementById('cdH'),
-          elM = document.getElementById('cdM'), elS = document.getElementById('cdS');
-      if (elD) elD.textContent = pad(d);
-      if (elH) elH.textContent = pad(h);
-      if (elM) elM.textContent = pad(m);
-      if (elS) elS.textContent = pad(sec);
-    }
-    tick();
-    setInterval(tick, 1000);
-  }
-  var homeShow = document.getElementById('homeNextShow');
-  if (homeShow) {
-    var homeUp = shows().filter(function (s) { return s.status !== 'past' && parseDate(s.date); })
-      .sort(function (a, b) { return parseDate(a.date) - parseDate(b.date); });
-    if (homeUp.length) {
-      homeShow.innerHTML = nextShowBannerHTML(homeUp[0]);
-      startCountdown(homeUp[0].date);
-    } else {
-      homeShow.innerHTML = '<p class="section-note">Todav\u00eda no hay fechas anunciadas. <a href="shows.html">Revisa la p\u00e1gina de shows</a> para lo que viene.</p>';
-    }
-  }
-
-  /* ---------- singles / video embeds ---------- */
-  function youtubeIdFromUrl(url) {
-    if (!url) return '';
-    var m = String(url).match(/(?:v=|youtu\.be\/|embed\/)([A-Za-z0-9_-]{6,})/);
-    return m ? m[1] : '';
-  }
-  function streamingRowHTML(s) {
-    var out = '';
-    if (s.spotify_url) {
-      out += '<a class="streaming-btn" href="' + esc(s.spotify_url) + '" target="_blank" rel="noopener noreferrer">' + SOCIAL_ICONS.spotify + ' Spotify</a>';
-    }
-    if (s.apple_music_url) {
-      out += '<a class="streaming-btn" href="' + esc(s.apple_music_url) + '" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 18V6l10-2v12"/><circle cx="7" cy="18" r="2.3"/><circle cx="17" cy="16" r="2.3"/></svg> Apple Music</a>';
-    }
-    if (s.youtube_url) {
-      out += '<a class="streaming-btn" href="' + esc(s.youtube_url) + '" target="_blank" rel="noopener noreferrer">' + SOCIAL_ICONS.youtube + ' YouTube</a>';
-    }
-    return out;
-  }
-  function singleCardHTML(s) {
-    var vid = s.youtube_id || youtubeIdFromUrl(s.youtube_url);
-    var media = vid
-      ? '<div class="video-embed"><iframe src="https://www.youtube.com/embed/' + esc(vid) + '" title="' + esc(s.title) + '" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>'
-      : s.cover_image
-        ? '<div class="single-cover"><img src="' + esc(s.cover_image) + '" alt="' + esc(s.title) + '" onerror="this.remove()"></div>'
-        : '<div class="single-cover"><span class="crest-fallback" style="position:static;width:100%;height:100%;display:flex">' + esc((s.title || '?').charAt(0)) + '</span></div>';
-    return '<div class="card single-card">' + media +
-      '<h3>' + esc(s.title) + '</h3>' +
-      (s.release_date ? '<div class="eyebrow">' + esc(s.release_date) + '</div>' : '') +
-      (s.blurb ? '<p>' + esc(s.blurb) + '</p>' : '') +
-      '<div class="streaming-row">' + streamingRowHTML(s) + '</div>' +
-    '</div>';
-  }
-
-  var singlesGrid = document.getElementById('singlesGrid');
-  if (singlesGrid) {
-    var allSingles2 = singles();
-    singlesGrid.innerHTML = allSingles2.length
-      ? allSingles2.map(singleCardHTML).join('')
-      : '<p class="section-note">Todav\u00eda no hay sencillos publicados \u2014 agrega uno en assets/music-data.js o con music-writer.html.</p>';
-  }
-
-  /* ---------- pagina-live: featured Spotify embed (from the newest single) ---------- */
-  function spotifyEmbedUrl(url) {
-    if (!url) return '';
-    return String(url).replace(/open\.spotify\.com\/(track|album|artist|playlist)\//, 'open.spotify.com/embed/$1/');
-  }
-  var spotifyMount = document.getElementById('spotifyEmbed');
-  if (spotifyMount) {
-    var featured = singles()[0];
-    var embedUrl = featured ? spotifyEmbedUrl(featured.spotify_url) : '';
-    spotifyMount.innerHTML = embedUrl
-      ? '<div class="spotify-embed-wrap"><iframe src="' + esc(embedUrl) + '" height="352" frameborder="0" allowfullscreen loading="lazy" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe></div>'
-      : '<p class="section-note" style="text-align:center">A&uacute;n no hay un enlace de Spotify cargado para el sencillo m&aacute;s reciente &mdash; agr&eacute;galo en music-writer.html.</p>';
-  }
-
-  /* ---------- pagina-live: one main video + two secondary ones ---------- */
-  var videoMain = document.getElementById('videoMain');
-  if (videoMain) {
-    var vids = singles().filter(function (s) { return s.youtube_id || youtubeIdFromUrl(s.youtube_url); });
-    if (vids.length) {
-      var main = vids[0];
-      var mainId = main.youtube_id || youtubeIdFromUrl(main.youtube_url);
-      videoMain.innerHTML = '<div class="video-embed"><iframe src="https://www.youtube.com/embed/' + esc(mainId) + '" title="' + esc(main.title) + '" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>';
-      var secMount = document.getElementById('videoSecondary');
-      if (secMount) {
-        var rest = vids.slice(1, 3);
-        secMount.innerHTML = rest.map(function (v) {
-          var vid = v.youtube_id || youtubeIdFromUrl(v.youtube_url);
-          return '<div><div class="video-embed"><iframe src="https://www.youtube.com/embed/' + esc(vid) + '" title="' + esc(v.title) + '" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div><div class="yt-caption">' + esc(v.title) + '</div></div>';
-        }).join('');
-      }
-    } else {
-      videoMain.innerHTML = '<p class="section-note" style="text-align:center">Todav\u00eda no hay videos cargados \u2014 agrega uno en music-writer.html.</p>';
-    }
-  }
-
-  /* ---------- header social icons (desktop, right side) ---------- */
-  var NAV_SOCIAL_ORDER = ['instagram', 'facebook', 'spotify', 'youtube'];
-  function navSocialHTML(socials) {
-    socials = socials || {};
-    return NAV_SOCIAL_ORDER.map(function (key) {
-      var url = socials[key];
-      if (!url) return '';
-      return '<a class="social-link" href="' + esc(url) + '" target="_blank" rel="noopener noreferrer" aria-label="' + SOCIAL_LABELS[key] + '">' + SOCIAL_ICONS[key] + '</a>';
-    }).join('');
-  }
-  var navSocial = document.getElementById('navSocial');
-  if (navSocial) {
-    navSocial.innerHTML = socialImgLinksHTML(window.BAND_ABOUT && window.BAND_ABOUT.socials);
   }
 
   /* ---------- save-the-date: Google Calendar link + downloadable .ics ----------
@@ -424,124 +119,22 @@
     });
   }
 
-  /* ---------- custom select dropdowns (contact page) ---------- */
-  var customSelects = document.querySelectorAll('.custom-select');
-  for (var csi = 0; csi < customSelects.length; csi++) {
-    (function (wrap) {
-      var btn = wrap.querySelector('.custom-select-btn');
-      var valueEl = wrap.querySelector('.custom-select-value');
-      var list = wrap.querySelector('.custom-select-list');
-      var hiddenField = wrap.querySelector('input[type="hidden"]');
-      var options = Array.prototype.slice.call(list.querySelectorAll('li'));
-      var activeIndex = 0;
-      for (var oi = 0; oi < options.length; oi++) {
-        if (options[oi].getAttribute('aria-selected') === 'true') { activeIndex = oi; break; }
-      }
-      function highlight(i) {
-        for (var j = 0; j < options.length; j++) { options[j].classList.toggle('active', j === i); }
-      }
-      function close() {
-        wrap.classList.remove('open');
-        list.hidden = true;
-        btn.setAttribute('aria-expanded', 'false');
-      }
-      function open() {
-        wrap.classList.add('open');
-        list.hidden = false;
-        btn.setAttribute('aria-expanded', 'true');
-        highlight(activeIndex);
-        list.focus();
-      }
-      function choose(i) {
-        activeIndex = i;
-        for (var j = 0; j < options.length; j++) { options[j].setAttribute('aria-selected', j === i ? 'true' : 'false'); }
-        valueEl.textContent = options[i].textContent;
-        if (hiddenField) hiddenField.value = options[i].getAttribute('data-value') || options[i].textContent;
-        close();
-        btn.focus();
-      }
-      btn.addEventListener('click', function () {
-        if (wrap.classList.contains('open')) { close(); } else { open(); }
+  /* ---------- dev cameo: greeting bubble shows itself shortly after
+     load, then fades out on its own — the little circle stays put. ---------- */
+  var devBubble = document.getElementById('devCameoBubble');
+  if (devBubble) {
+    var devShowTimer = setTimeout(function () { devBubble.classList.add('show'); }, 700);
+    var devHideTimer = setTimeout(function () { devBubble.classList.remove('show'); }, 6500);
+    var devCameo = document.querySelector('.dev-cameo');
+    if (devCameo) {
+      devCameo.addEventListener('mouseenter', function () {
+        clearTimeout(devShowTimer);
+        clearTimeout(devHideTimer);
+        devBubble.classList.add('show');
       });
-      btn.addEventListener('keydown', function (ev) {
-        if (ev.key === 'ArrowDown' || ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); open(); }
+      devCameo.addEventListener('mouseleave', function () {
+        devHideTimer = setTimeout(function () { devBubble.classList.remove('show'); }, 1200);
       });
-      list.addEventListener('keydown', function (ev) {
-        if (ev.key === 'ArrowDown') { ev.preventDefault(); activeIndex = Math.min(activeIndex + 1, options.length - 1); highlight(activeIndex); }
-        else if (ev.key === 'ArrowUp') { ev.preventDefault(); activeIndex = Math.max(activeIndex - 1, 0); highlight(activeIndex); }
-        else if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); choose(activeIndex); }
-        else if (ev.key === 'Escape') { close(); btn.focus(); }
-        else if (ev.key === 'Tab') { close(); }
-      });
-      for (var oi2 = 0; oi2 < options.length; oi2++) {
-        (function (idx) {
-          options[idx].addEventListener('click', function () { choose(idx); });
-          options[idx].addEventListener('mouseenter', function () { activeIndex = idx; highlight(idx); });
-        })(oi2);
-      }
-      document.addEventListener('click', function (ev) {
-        if (!wrap.contains(ev.target)) close();
-      });
-    })(customSelects[csi]);
-  }
-
-  /* ---------- contact form ---------- */
-  var contactForm = document.getElementById('contactForm');
-  if (contactForm) {
-    var cfStatus = document.getElementById('cfStatus');
-    var cfSubmit = document.getElementById('cfSubmit');
-    contactForm.addEventListener('submit', function (ev) {
-      ev.preventDefault();
-      if (/YOUR_FORM_ID/.test(contactForm.action)) {
-        cfStatus.textContent = 'Este formulario a\u00fan no est\u00e1 conectado \u2014 escr\u00edbenos directo a ' + CONTACT_EMAIL + ' por ahora.';
-        return;
-      }
-      cfSubmit.disabled = true;
-      cfStatus.textContent = 'Enviando...';
-      fetch(contactForm.action, {
-        method: 'POST',
-        body: new FormData(contactForm),
-        headers: { Accept: 'application/json' }
-      }).then(function (res) {
-        if (res.ok) {
-          cfStatus.textContent = 'Gracias \u2014 tu mensaje va en camino. Te responderemos pronto.';
-          contactForm.reset();
-        } else {
-          cfStatus.textContent = 'Algo sali\u00f3 mal. Intenta de nuevo o escr\u00edbenos a ' + CONTACT_EMAIL + '.';
-        }
-      }).catch(function () {
-        cfStatus.textContent = 'Algo sali\u00f3 mal. Intenta de nuevo o escr\u00edbenos a ' + CONTACT_EMAIL + '.';
-      }).then(function () { cfSubmit.disabled = false; });
-    });
-  }
-
-  /* ---------- newsletter popup (home only, once per visitor) ---------- */
-  var nlOverlay = document.getElementById('nlModalOverlay');
-  if (nlOverlay) {
-    var NL_KEY = 'lp_newsletter_dismissed_at';
-    var NL_SNOOZE_DAYS = 30;
-    var nlClose = document.getElementById('nlModalClose');
-
-    function nlShouldShow() {
-      try {
-        var last = localStorage.getItem(NL_KEY);
-        if (!last) return true;
-        return (Date.now() - parseInt(last, 10)) / 86400000 > NL_SNOOZE_DAYS;
-      } catch (e) { return true; }
     }
-    function nlOpen() {
-      nlOverlay.hidden = false;
-      document.body.style.overflow = 'hidden';
-    }
-    function nlDismiss() {
-      nlOverlay.hidden = true;
-      document.body.style.overflow = '';
-      try { localStorage.setItem(NL_KEY, String(Date.now())); } catch (e) {}
-    }
-    if (nlClose) nlClose.addEventListener('click', nlDismiss);
-    nlOverlay.addEventListener('click', function (e) { if (e.target === nlOverlay) nlDismiss(); });
-    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !nlOverlay.hidden) nlDismiss(); });
-
-    if (nlShouldShow()) setTimeout(nlOpen, 5000);
   }
 })();

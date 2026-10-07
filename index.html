@@ -46,6 +46,46 @@
     </div>
   </main>
 
+  <div class="dev-cameo-wrap">
+    <div class="dev-cameo-bubble" id="devCameoBubble" role="status">C&oacute;mprale un caf&eacute; al dev</div>
+    <a class="dev-cameo" href="https://buymeacoffee.com/cmramirez.dev" target="_blank" rel="noopener noreferrer" aria-label="C&oacute;mprale un caf&eacute; al developer">
+      <img src="images/bmc-logo.webp" alt="" aria-hidden="true">
+    </a>
+  </div>
+
+  <script>
+     const playlist = [
+      "audio/CHIQUITITA - LO'PRIMO.mp3",
+      "audio/INEVITABLE - LO'PRIMO (Official Audio).mp3",
+      "audio/LOPRIMO - UN BESO TUYO (Etapa 8 La Cura).mp3",
+      "audio/Miguel Bosé - Morena Mía (LO'PRIMO - Cover).mp3",
+      "audio/Lo Que Quiero Ser - LO'PRIMO (Lyric Video).mp3"
+    ];
+    const music = new Audio();
+    music.volume = 0.033;
+    let lastSong = -1;
+
+    function playRandomSong() {
+    let randomSong;
+    do {
+        randomSong = Math.floor(Math.random() * playlist.length);
+    } while (playlist.length > 1 && randomSong === lastSong);
+
+    lastSong = randomSong;
+    music.src = playlist[randomSong];
+
+    music.play().catch(() => {});
+    }
+
+    music.addEventListener("ended", playRandomSong);
+
+    playRandomSong();
+    document.addEventListener("click", () => {
+      if (music.paused) {
+        music.play().catch(() => {});
+      }
+    }, { once: true });
+  </script>
   <script src="assets/about-data.js"></script>
   <script src="assets/app.js"></script>
 </body>
