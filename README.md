@@ -40,6 +40,10 @@ renombrar ni reemplazar. `CNAME` sigue apuntando a `loprimofficial.vip`.
   Cuando llega la hora, la cuenta regresiva se cambia sola por
   "&iexcl;Lleg&oacute; el d&iacute;a!".
 - **Links de redes sociales (footer):** `assets/about-data.js`.
+- **Vista previa al compartir el link (Instagram, WhatsApp, iMessage):**
+  las etiquetas `og:` en el `<head>` de `index.html` y la imagen
+  `images/og-image.jpg` (1200&times;630). Si cambias la imagen, usa un
+  nombre nuevo (ej. `og-image-2.jpg`) para que las apps no muestren la vieja.
 - **Bot&oacute;n flotante "C&oacute;mprale un caf&eacute; al dev":** el link est&aacute; en
   el `<a class="dev-cameo">` de `index.html`. Flota en la esquina de
   abajo a la derecha, al nivel de los iconos de redes.
