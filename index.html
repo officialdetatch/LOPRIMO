@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>LO'PRIMO</title>
-  <meta name="description" content="LO'PRIMO vuelve — guarda la fecha: lunes 12 de octubre.">
+  <meta name="description" content="LO'PRIMO vuelve — Lunes De Jazz, UnoSieteOcho Bar, Santiago. Lunes 12 de octubre, 8:00 PM.">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="LO'PRIMO">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -21,23 +21,41 @@
     <div class="splash-scrim" aria-hidden="true"></div>
 
     <div class="wrap splash-content">
-      <h1 class="announce-heading">PRIMOS!</h1>
-      <p class="announce-line">Despu&eacute;s de tanto tiempo&hellip;<br>NOS VOLVEMOS A VER!</p>
-      <p class="announce-sub">Prep&aacute;rense para un REENCUENTRO &Uacute;NICO,<br>de esos que merecen quedarse en el coraz&oacute;n.</p>
-
-      <div class="save-the-date-card">
-        <span class="std-eyebrow">Save the date</span>
-        <button type="button" class="std-date-btn" id="saveDateBtn" aria-haspopup="true" aria-expanded="false">
-          LUNES, 12 DE OCTUBRE
-          <svg class="std-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
-        </button>
-        <div class="std-menu" id="saveDateMenu" hidden>
-          <a class="std-menu-link" id="saveDateGcal" href="#" target="_blank" rel="noopener noreferrer">Agregar a Google Calendar</a>
-          <a class="std-menu-link" id="saveDateIcs" href="#">Apple / Outlook (.ics)</a>
-        </div>
+      <div class="hero-intro">
+        <h1 class="announce-heading">PRIMOS!</h1>
+        <p class="announce-line">Despu&eacute;s de tanto tiempo&hellip;<br>NOS VOLVEMOS A VER!</p>
       </div>
 
-      <p class="announce-footer-note">M&aacute;s informaci&oacute;n esta semana.<br>Por ahora&hellip; solo guarden la fecha.</p>
+      <!-- PRÓXIMO EVENTO — to change the date/time of the countdown and the
+           calendar entry, edit EVENT_START in assets/app.js -->
+      <section class="next-event" aria-labelledby="nextEventName">
+        <div class="ne-eyebrow"><span class="ne-dot" aria-hidden="true"></span>Pr&oacute;ximo evento</div>
+        <h2 class="ne-name" id="nextEventName">
+          <a href="https://www.instagram.com/lunesdejazz" target="_blank" rel="noopener noreferrer">Lunes De Jazz</a>
+        </h2>
+        <p class="ne-meta">
+          <a href="https://www.google.com/maps/place/Unosieteocho,+Av.+Juan+Pablo+Duarte+178,+Santiago+de+los+Caballeros+51000/@19.4588426,-70.6779221,16z/data=!4m6!3m5!1s0x8eb1c5000cfc51d5:0xb3c9223665a78487!8m2!3d19.4588426!4d-70.6779221!16s%2Fg%2F11vsv6m9lk?g_ep=Eg1tbF8yMDI2MTAwNl8wIOC7DCoASAJQAg%3D%3D" target="_blank" rel="noopener noreferrer">UnoSieteOcho Bar, Santiago</a><br>
+          <span class="ne-date">12 OCT 2026 &middot; 8:30 PM</span>
+        </p>
+        <p class="ne-cover">Cover &mdash; RD$350</p>
+
+        <div class="ne-countdown" id="eventCountdown" role="timer" aria-live="off">
+          <div class="ne-unit"><span class="ne-num" id="cdDays">--</span><span class="ne-label">d&iacute;as</span></div>
+          <div class="ne-unit"><span class="ne-num" id="cdHours">--</span><span class="ne-label">hrs</span></div>
+          <div class="ne-unit"><span class="ne-num" id="cdMins">--</span><span class="ne-label">min</span></div>
+          <div class="ne-unit"><span class="ne-num" id="cdSecs">--</span><span class="ne-label">seg</span></div>
+        </div>
+        <p class="ne-done" id="cdDone" hidden>&iexcl;Lleg&oacute; el d&iacute;a! Nos vemos en UnoSieteOcho.</p>
+        <div class="ne-rule" aria-hidden="true"></div>
+
+        <div class="ne-cal">
+          <button type="button" class="ne-cal-btn" id="saveDateBtn" aria-haspopup="true" aria-expanded="false">+ Agregar al calendario</button>
+          <div class="std-menu ne-cal-menu" id="saveDateMenu" hidden>
+            <a class="std-menu-link" id="saveDateGcal" href="#" target="_blank" rel="noopener noreferrer">Google Calendar</a>
+            <a class="std-menu-link" id="saveDateIcs" href="#">Apple / Outlook (.ics)</a>
+          </div>
+        </div>
+      </section>
     </div>
 
     <div class="wrap splash-footer">

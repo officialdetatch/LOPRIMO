@@ -4,10 +4,10 @@ Plain HTML/CSS/JS, no build step, no framework. Open `index.html` in a
 browser and it works; upload the whole folder anywhere static
 (GitHub Pages, Netlify, any host) and it works there too.
 
-## Estado actual: p&aacute;gina &uacute;nica ("save the date")
+## Estado actual: p&aacute;gina &uacute;nica
 
 El sitio es ahora una sola p&aacute;gina: `index.html`. Es la foto de fondo
-de pantalla completa, con el texto del anuncio encima y, al final, el
+de pantalla completa, con el anuncio y el pr&oacute;ximo evento encima y, al final, el
 footer con los logos de redes. Nada m&aacute;s — no hay nav, ni otras
 p&aacute;ginas, ni formularios.
 
@@ -29,15 +29,20 @@ renombrar ni reemplazar. `CNAME` sigue apuntando a `loprimofficial.vip`.
 
 ## Editar contenido
 
-- **Fecha del show / texto del anuncio:** se edita directo en el
-  `<h1>`/`<p>` de `index.html` dentro de `.splash-content`.
-- **Fecha del bot&oacute;n "save the date" (para el calendario):** las
-  constantes `STD_START` / `STD_END` cerca del final de `assets/app.js`
-  (formato `AAAAMMDD`).
+- **Texto de arriba ("PRIMOS!"):** el `<div class="hero-intro">` en `index.html`.
+- **Pr&oacute;ximo evento (nombre, links, lugar, fecha, cover):** el
+  `<section class="next-event">` en `index.html`. El nombre del evento
+  enlaza a su Instagram y el lugar enlaza a Google Maps.
+- **Hora del evento (cuenta regresiva + "Agregar al calendario"):**
+  `EVENT_START` en `assets/app.js`, con la hora de RD
+  (`2026-10-12T20:00:00-04:00`). Ah&iacute; mismo est&aacute;n el t&iacute;tulo,
+  la direcci&oacute;n y la duraci&oacute;n (`EVENT_HOURS`) del evento de calendario.
+  Cuando llega la hora, la cuenta regresiva se cambia sola por
+  "&iexcl;Lleg&oacute; el d&iacute;a!".
 - **Links de redes sociales (footer):** `assets/about-data.js`.
-- **Bot&oacute;n flotante "C&oacute;mprale un caf&eacute; al dev":** el link
-  de Buy Me a Coffee est&aacute; en el `<a class="dev-cameo">` de
-  `index.html`, justo despu&eacute;s del `</main>`.
+- **Bot&oacute;n flotante "C&oacute;mprale un caf&eacute; al dev":** el link est&aacute; en
+  el `<a class="dev-cameo">` de `index.html`. Flota en la esquina de
+  abajo a la derecha, al nivel de los iconos de redes.
 
 Las p&aacute;ginas viejas (about/shows/music/contact) y sus
 `*-writer.html` ya no est&aacute;n en el repo — si alg&uacute;n d&iacute;a
